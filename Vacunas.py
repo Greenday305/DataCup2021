@@ -16,8 +16,21 @@ val = []
 for row in sheet.iter_rows(min_row=2,max_row=25,values_only=True):
     val += [row]
 
+
+a = val[5][10].split(" ")
+print(a)
+print("\n")
+b = "Does"
+for i in range(len(a)):
+    if a[i] == b:
+        print("Si es igual")
+    else:
+        print("No es igual")
+
+#for i in range(len(val[5][10]))
 #print(val)
-print(val[5])
+#print(val[5][10])
+#print()
 print("hola soy luis")
 print("hola soy Carlos")
 print("Hola, soy AstroErick")
