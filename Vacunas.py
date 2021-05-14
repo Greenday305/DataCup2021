@@ -31,6 +31,3 @@ for i in range(len(a)):
 #print(val)
 #print(val[5][10])
 #print()
-print("hola soy luis")
-print("hola soy Carlos")
-print("Hola, soy AstroErick")
