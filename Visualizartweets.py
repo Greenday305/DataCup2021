@@ -36,6 +36,7 @@ for row in sheet.iter_rows(min_row=2,max_row=46060,values_only=True):
         except IndexError:
             print([row[2],"IndexError (checar)"])
             break
+        
 
 
 #Marcadores para cada objeto
