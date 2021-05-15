@@ -5,7 +5,7 @@ import cv2
 cv2.imshow("Mi imagen",img)
 cv2.waitKey(0) """
 
-cap = cv2.VideoCapture("callfaitel.mp4")
+""" cap = cv2.VideoCapture("callfaitel.mp4")
 cap.set(3,640)
 cap.set(4,480)
 
@@ -16,9 +16,9 @@ while True:
     	if cv2.waitKey(1) & 0xFF == ord('q'):
     		break
     else:
-    	break
+    	break """
 
-lec = 0
+lec = 1
 #Leer de camara:
 if lec == 1:
     cv2.namedWindow("Camarilla")
