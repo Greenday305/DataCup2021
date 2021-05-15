@@ -18,7 +18,7 @@ sheet = wb.worksheets[0]
 coordenadas = []
 
 i=2
-for row in sheet.iter_rows(min_row=2,max_row=10,values_only=True):
+for row in sheet.iter_rows(min_row=2,max_row=100,values_only=True):
     address = row[2]
     while True:
         try:
@@ -33,6 +33,10 @@ for row in sheet.iter_rows(min_row=2,max_row=10,values_only=True):
             #i+=1
             print([row[2],"Este no"])
             break
+        except IndexError:
+            print([row[2],"IndexError (checar)"])
+            break
+
 
 #Marcadores para cada objeto
 #for item in coordenadas:
