@@ -1,13 +1,24 @@
 import cv2
 
-img = cv2.imread("C:/Users/davis/OneDrive/Escritorio/Progra nuevo/Python libreria de trabajo/OpenCV/imagenmia.jpg")
+""" img = cv2.imread("imagenmia.jpg")
 
-cv2.imshow("Output",img)
-cv2.waitKey(0)
+cv2.imshow("Mi imagen",img)
+cv2.waitKey(0) """
 
-#cap = cv2.VideoCapture()
+cap = cv2.VideoCapture("callfaitel.mp4")
+cap.set(3,640)
+cap.set(4,480)
 
-lec = 1
+while True:
+    success, img = cap.read()
+    if img is not False:
+    	cv2.imshow("Video", img)
+    	if cv2.waitKey(1) & 0xFF == ord('q'):
+    		break
+    else:
+    	break
+
+lec = 0
 #Leer de camara:
 if lec == 1:
     cv2.namedWindow("Camarilla")
