@@ -1,9 +1,11 @@
 import folium
 from folium.plugins import FastMarkerCluster
 from openpyxl import load_workbook
+import requests
+import urllib.parse
 
 #Crear el mapa como un objeto
-m = folium.Map(location=[19.595772, -98.997218])
+m = folium.Map(location=[37.7790262, -122.419906])
 
 #Global tooltip
 #tooltip = "Click para más información"
@@ -15,10 +17,22 @@ sheet = wb.worksheets[0]
 
 coordenadas = []
 
-for row in sheet.iter_rows(min_row=2,values_only=True):
-	xy = [ row[0] , row[1]]
-	if xy not in coordenadas:
-		coordenadas.append(xy)
+i=2
+for row in sheet.iter_rows(min_row=2,max_row=10,values_only=True):
+    address = row[2]
+    while True:
+        try:
+            url = 'https://nominatim.openstreetmap.org/search/' + urllib.parse.quote(address) +'?format=json'
+            response = requests.get(url).json()
+            xy = [ response[0]["lat"] , response[0]["lon"]]
+            print([row[2],xy])
+            coordenadas.append(xy)
+            #i+=1
+            break
+        except TypeError:
+            #i+=1
+            print([row[2],"Este no"])
+            break
 
 #Marcadores para cada objeto
 #for item in coordenadas:
@@ -27,7 +41,7 @@ for row in sheet.iter_rows(min_row=2,values_only=True):
 #				tooltip=tooltip).add_to(m)
 
 
-#Otros marcadores
+#Otros marcadores #### ESTE ES EL DE FAST MARKER CLUSTER
 folium.plugins.FastMarkerCluster(coordenadas,name='Tiendas de conveniencia').add_to(m)
 folium.map.LayerControl().add_to(m)
 

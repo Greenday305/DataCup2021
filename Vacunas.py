@@ -19,7 +19,7 @@ for row in sheet.iter_rows(min_row=2,max_row=25,values_only=True):
 print(val[5][2])
 coor = []
 for i in range(len(val)):
-    coor += [val[i][2]]
+    coor.append([val[i][2]])
 print(coor)
 a = val[5][10].split(" ")
 print(a)
@@ -28,10 +28,18 @@ b = "Does"
 for i in range(len(a)):
     if a[i] == b:
         print("Si es igual")
-    else:
-        print("No es igual")
 
 #for i in range(len(val[5][10]))
 #print(val)
 #print(val[5][10])
 #print()
+
+import requests
+import urllib.parse
+
+address = 'Birmingham, England'
+url = 'https://nominatim.openstreetmap.org/search/' + urllib.parse.quote(address) +'?format=json'
+
+response = requests.get(url).json()
+print(response[0]["lat"])
+print(response[0]["lon"])
