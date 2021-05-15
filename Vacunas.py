@@ -61,3 +61,78 @@ vacunas = {"vacuna_general": ["pfizer", "astrazeneca", "sputnik", "moderna", "jo
 "sinovac": "sinovac",
 "cansino": "cansino",
 "bharat": "bharat"}
+
+#búsqueda de tweets mediante palabras clave
+"""
+text = wb.worksheet[10]
+
+for row in text[1:]:
+    x = text.find(reacciones.values[0])
+    if x == True:
+        print(x)
+
+for row in text[1:]:
+    y = text.find(reacciones.values[1])
+    if y == True:
+        print(y)
+
+for row in text[1:]:
+    z = text.find(reacciones.values[2])
+    if z == True:
+        print(z)
+
+for row in text[1:]:
+    v1 = text.find(vacunas.values[0])
+    if v1 == True:
+        print(v1)
+
+for row in text[1:]:
+    v2 = text.find(vacunas.values[1])
+    if v2 == True:
+        print(v2)
+
+for row in text[1:]:
+    v3 = text.find(vacunas.values[2])
+    if v3 == True:
+        print(v3)
+
+for row in text[1:]:
+    v4 = text.find(vacunas.values[3])
+    if v4 == True:
+        print(v4)
+
+for row in text[1:]:
+    v5 = text.find(vacunas.values[4])
+    if v5 == True:
+        print(v5)
+
+for row in text[1:]:
+    v6 = text.find(vacunas.values[5])
+    if v6 == True:
+        print(v6)
+
+for row in text[1:]:
+    v7 = text.find(vacunas.values[6])
+    if v7 == True:
+        print(v7)
+
+for row in text[1:]:
+    v8 = text.find(vacunas.values[7])
+    if v8 == True:
+        print(v8)
+
+for row in text[1:]:
+    v9 = text.find(vacunas.values[8])
+    if v9 == True:
+        print(v9)
+
+for row in text[1:]:
+    v10 = text.find(vacunas.values[9])
+    if v10 == True:
+        print(v10)
+
+for row in text[1:]:
+    v11 = text.find(vacunas.values[10])
+    if v11 == True:
+        print(v11)
+"""
