@@ -2,200 +2,59 @@
 from typing import Tuple
 from openpyxl import load_workbook
 from openpyxl import Workbook
+import time
+
+start = time.time()
 
 # Se suben los datos y se selecciona la hoja a analizar.
 wb = load_workbook('vaccination_all_tweets.xlsx')
 sheet = wb.worksheets[0]
 
-excel = load_workbook("vaccination_all_tweets.xlsx")
-hoja = excel.worksheets[0]
-
-for row in hoja.iter_rows(min_row=1,max_row=40,values_only=True):
-    row
-
 # Se leen los títulos para conocer la localización de los elementos a buscar y se despliegan.
-tit = []
-for row in sheet.iter_rows(min_row=1,max_row=1,values_only=True):
-	tit += row
-print(tit)
+# tit = []
+# for row in sheet.iter_rows(min_row=1,max_row=1,values_only=True):
+# 	tit += row
+# print(tit)
+########## INCLUIR ESTE CODIGO EN LA PRESENTACION ##############
 
-val = []
-
-for row in sheet.iter_rows(min_row=2,max_row=25,values_only=True):
-    val += [row]
-
-#print(val[5][2])
-coor = []
-for i in range(len(val)):
-    coor.append([val[i][2]])
-#print(coor)
-a = val[5][10].split(" ")
-#print(a)
-#print("\n")
-b = "Does"
-for i in range(len(a)):
-    if a[i] == b:
-        print("Si es igual")
-print("\n")
-
-# Con lo anterior en mente, se leen los tweets
-tweet_range = (2,sheet.max_row)
-tweets = []
-index = 0
-for row in sheet.iter_rows(min_row=tweet_range[0], max_row=tweet_range[1], values_only=True):
-    tweets += [row]
-    print(tweets[index][10])
-    print("\n")
-    index += 1
-# coor = []
-# for i in range(len(val)):
-#     coor.append([val[i][2]])
-# print(coor)
-# a = val[5][10].split(" ")
-# print(a)
-# print("\n")
-# b = "Does"
-# for i in range(len(a)):
-#     if a[i] == b:
-#         print("Si es igual")
-
-#for i in range(len(val[5][10]))
-#print(val)
-#print(val[5][10])
-#print()
-
-#import requests
-#import urllib.parse
-
-#address = 'Birmingham, England'
-#url = 'https://nominatim.openstreetmap.org/search/' + urllib.parse.quote(address) +'?format=json'
-
-#response = requests.get(url).json()
-#print(response[0]["lat"])
-#print(response[0]["lon"])
-
-print("\n")
-#print(response[0]["lat"])
-#print(response[0]["lon"])
-
-#diccionarios para filtrar
-
-tf = ["Same", "said", "Same", "gato", "said", "said"]
-
-reacciones = { "positivo": ["safe", "treatment", "administration", "administered", "dose", "doses", "health", "healthy", "family", "admiration", "courage", "brave", "bravery", "serious", "seriously", "merry", "merrier","Same","paste"],
-"negativo": ["bad", "crime", "cheat", "cheated", "greed", "side", "effects", "corruption", "hurt", "hurts", "hate", "hating", "diplomacy", "fake", "stall", "stalled", "war"],
+reacciones = { "positivo": ["safe", "treatment", "administration", "administered", "dose", "doses", "health", "healthy", "family", "admiration", "courage", "brave", "bravery", "serious", "seriously", "merry", "merrier","Same","paste", "effective"],
+"negativo": ["bad", "crime", "cheat", "cheated", "greed", "side", "effects", "corruption", "hurt", "hurts", "hate", "hating", "diplomacy", "fake", "stall", "stalled", "war", "ineffective"],
 "neutral": ["facts", "fact", "sources", "source", "information", "cases", "case", "deaths", "distribution", "specialist", "programme", "inoculation", "inoculating", "needle", "medicine", "symptoms", "available", "update", "schedule", "immunity", "authorization", "authorized", "information", "approving", "approved", "manufacture", "manufacturing"]}
 
-print("Parte del caliz")
+vaccines_dict = {"PfizerBioNTech": 0, "AstraZeneca": 0, "SputnikV": 0, "Moderna": 0, "johnsonandjohnson": 0, "Oxford": 0, "Novavax": 0, "Sinovac": 0, "Cansino": 0, "Bharat": 0}
+vaccines = ["PfizerBioNTech", "AstraZeneca", "SputnikV", "Moderna", "johnsonandjohnson", "Oxford", "Novavax", "Sinovac", "Cansino", "Bharat"]
 
-dic = {
-    "caliz": [["Same",0], ["said",0]]
-}
+# Búsqueda de tweets mediante palabras clave
+Pos = 0
+Neg = 0
+Neu = 0
+total_words = dict()
+for row in sheet.iter_rows(min_row = 2, max_row = sheet.max_row, values_only = True):
+    rate = 0
+    words = row[10].split()
+    # Jajajaja este paso me da mucha risa, pero funciona "elegantemente".
+    if row[11] != None : hashtags = row[11].split("'")
+    for word in words:
+        if word in reacciones["positivo"]:
+            rate += 1
+        elif word in reacciones["negativo"]:
+            rate += -1
+        elif word not in total_words:
+            total_words[word] = 1
+        elif word in total_words:
+            total_words[word] += 1
+        elif word[0] == "#":
+            hashtags.append(word)
 
-for item in tf:
-    for i in range(len(dic["caliz"])):
-        if item == dic["caliz"][i][0]:
-            dic["caliz"][i][1] += 1
+    if rate >= 1 : Pos += 1
+    elif rate <= -1 : Neg += 1
+    else : Neu += 1
+    
+    vaccines_index = list()
+    for hashtag in hashtags :
+        if hashtag not in vaccines_index and hashtag in vaccines :
+            vaccines_index.append(hashtag)
+            vaccines_dict[hashtag] += 1
 
-print(dic)
-
-print("Fin del caliz")
-
-#vacunas = {"vacuna_general": ["pfizer", "astrazeneca", "sputnik", "moderna", "johnson", "oxford", "novavax", "sinovac", "cansino", "bharat"]}
-
-P = 0
-p = 0
-N = 0
-n = 0
-for row in sheet.iter_rows(min_row=2,max_row=5,values_only=True):
-    palabras = row[10].split()
-    print(palabras)
-    for item in palabras:
-        if item in reacciones["positivo"]:
-            p += 1
-            print("Hola soy German")
-        elif item in reacciones["negativo"]:
-            n+=1
-            print()
-        else:
-            print("no")
-    P += p
-    N += n
-    p = 0
-    n = 0
-
-#búsqueda de tweets mediante palabras clave
-"""
-text = wb.worksheet[0]
-
-for row in text[1:]:
-    x = text.find(reacciones.values[0])
-    text.find(row[10])
-    if x == True:
-        print(x)
-
-for row in text[1:]:
-    y = text.find(reacciones.values[1])
-    if y == True:
-        print(y)
-
-for row in text[1:]:
-    z = text.find(reacciones.values[2])
-    if z == True:
-        print(z)
-
-for row in text[1:]:
-    v1 = text.find(vacunas.values[0])
-    if v1 == True:
-        print(v1)
-
-for row in text[1:]:
-    v2 = text.find(vacunas.values[1])
-    if v2 == True:
-        print(v2)
-
-for row in text[1:]:
-    v3 = text.find(vacunas.values[2])
-    if v3 == True:
-        print(v3)
-
-for row in text[1:]:
-    v4 = text.find(vacunas.values[3])
-    if v4 == True:
-        print(v4)
-
-for row in text[1:]:
-    v5 = text.find(vacunas.values[4])
-    if v5 == True:
-        print(v5)
-
-for row in text[1:]:
-    v6 = text.find(vacunas.values[5])
-    if v6 == True:
-        print(v6)
-
-for row in text[1:]:
-    v7 = text.find(vacunas.values[6])
-    if v7 == True:
-        print(v7)
-
-for row in text[1:]:
-    v8 = text.find(vacunas.values[7])
-    if v8 == True:
-        print(v8)
-
-for row in text[1:]:
-    v9 = text.find(vacunas.values[8])
-    if v9 == True:
-        print(v9)
-
-for row in text[1:]:
-    v10 = text.find(vacunas.values[9])
-    if v10 == True:
-        print(v10)
-
-for row in text[1:]:
-    v11 = text.find(vacunas.values[10])
-    if v11 == True:
-        print(v11)
-"""
+end = time.time()
+print("Positive: ", Pos, "\nNegative: ", Neg, "\nNeutral: ", Neu, "\nvaccines: ", vaccines_dict, "\nTime: ", end - start)

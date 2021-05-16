@@ -18,7 +18,7 @@ sheet = wb.worksheets[0]
 coordenadas = []
 
 i=2
-for row in sheet.iter_rows(min_row=2,max_row=46060,values_only=True):
+for row in sheet.iter_rows(min_row=2, max_row=46060, values_only=True):
     address = row[2]
     while True:
         try:
