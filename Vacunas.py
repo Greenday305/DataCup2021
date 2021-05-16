@@ -37,13 +37,13 @@ total_words = dict()
 for row in sheet.iter_rows(min_row = 2, max_row = sheet.max_row, values_only = True):
     rate = 0
     words = row[10].split()
-    dates = row[9][0:9].split("-")
-    # This code line, does not really solves a problem, but it makes the clasification to work efficiently.
+    day = row[9].date()
+    # This code line does not really solve a problem, but it makes the classification work efficiently.
     if row[11] != None : hashtags = row[11].split("'")
 
-    for t in dates : 
+    """ for t in dates : 
         if t[0] == 0 : dates[t] = dates[1:]
-    day = date(",".join(dates))
+    day = date(",".join(dates)) """
 
     if row[13] != None : rt = int( row[13] ) / ( today - day ).days
     if rt > max_retweet : max_retweet, best_retweet = rt, row[10]
