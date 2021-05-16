@@ -27,9 +27,9 @@ vaccines = ["pfizer", "astrazeneca", "sputnikv", "moderna", "johnson", "oxford",
 total_vaccines = {"pfizer": 0, "astrazeneca": 0, "sputnikv": 0, "moderna": 0, "johnson": 0, "oxford": 0, "novavax": 0, "sinovac": 0, "cansino": 0, "bharat": 0}
 
 # Search of positive and negative tweets according to the keyword lists.
-Pos = 0
-Neg = 0
-Neu = 0
+rates = {"positive": 0, "negative": 0, "neutral": 0}
+retweets = {"positive": 0, "negative": 0}
+
 total_words = dict()
 for row in sheet.iter_rows(min_row = 2, max_row = sheet.max_row, values_only = True):
     rate = 0
@@ -37,6 +37,7 @@ for row in sheet.iter_rows(min_row = 2, max_row = sheet.max_row, values_only = T
     # This code line, does not really solves a problem, but it makes the clasification to work efficiently.
     if row[11] != None : hashtags = row[11].split("'")
 
+    if row[13] != None : rt = int( row[13] )
     # Word are clasified and a global rate for the sentence is defined. The lower case convention is used in words and hashtags to avoid the consideration of repeated words with capital lettters present.
     for word in words:
         if word.lower() in reactions["positive"] : rate += 1
