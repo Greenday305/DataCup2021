@@ -4,7 +4,7 @@ from openpyxl import load_workbook
 import requests
 import urllib.parse
 
-f = open("coor.txt","a")
+f = open("coor2.txt","a")
 
 wb = load_workbook('vaccination_all_tweets.xlsx')
 sheet = wb.worksheets[0]
