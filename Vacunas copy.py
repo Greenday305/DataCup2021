@@ -1,6 +1,8 @@
 # Necessary libraries
 from typing import Tuple
 from openpyxl import load_workbook
+import folium
+from folium.plugins import FastMarkerCluster
 from openpyxl import Workbook
 import time
 import matplotlib.pyplot as plt
@@ -32,6 +34,25 @@ rates = {"positive": 0, "negative": 0, "neutral": 0}
 retweets = {"positive": 0, "negative": 0}
 max_retweet, best_retweet, max_likes, best_liked = 0, "", 0, ""
 today = date.today()
+
+#The dictionary from which we get the coordinates for the locations
+locaciones = {}
+
+with open("locaciones.txt") as f:
+    for line in f:
+        try:
+            key, val = line.split(":")
+            locaciones[key] = val
+        except ValueError:
+            pass
+
+coor = []
+
+for k in locaciones:
+    b = locaciones[k].strip("'\n]['").split("', '")
+    b = [ float(item) for item in b]
+    locaciones[k] = [b,0]
+    coor.append(b)
 
 total_words = dict()
 for row in sheet.iter_rows(min_row = 2, max_row = sheet.max_row, values_only = True):
@@ -78,6 +99,10 @@ for row in sheet.iter_rows(min_row = 2, max_row = sheet.max_row, values_only = T
     elif rate <= -1 : rates["negative"], retweets["negative"] = 1 + rates["negative"], rt + retweets["negative"]
     else : rates["neutral"] += 1
 
+    #Here we count the number of tweets by location
+    if row[2] in locaciones:
+        locaciones[row[2]][1] += 1
+
 # Timer is terminated and results are displayed.
 end = time.time()
 
@@ -86,8 +111,19 @@ print("Most retweets:\n", best_retweet, "\n\n", "Most liked:", best_liked, "\n")
 print("Positive: ", rates["positive"], "\nRetweets: ", retweets["positive"], "\nNegative: ", rates["negative"], "\nRetweets: ",  retweets["negative"], "\nNeutral: ", rates["neutral"], "\nvaccines: ", total_vaccines, "\nTime: ", end - start)
 
 # First try of an histogram (this is still in process).
+plt.figure(1)
 plt.bar(total_vaccines.keys(), total_vaccines.values(), 1, color = 'b')
 plt.xlabel("Vacunas")
 plt.ylabel("Número de menciones")
 plt.title("Menciones de cada vacuna")
+
+print(locaciones)
+
+""" plt.figure(2)
+numloc = [list(locaciones.values())[i][1] for i in range(len(locaciones))]
+plt.bar(locaciones.keys(), numloc, 1, color = 'r')
+plt.xlabel("Locaciones")
+plt.ylabel("Número de tweets")
+plt.title("Tweets por locación") """
+
 plt.show()
