@@ -46,10 +46,10 @@ for row in sheet.iter_rows(min_row = 2, max_row = sheet.max_row, values_only = T
     day = date(",".join(dates)) """
 
     if row[13] != None : rt = int( row[13] ) / ( today - day ).days
-    if rt > max_retweet : max_retweet, best_retweet = rt, row[10]
+    if rt > max_retweet : max_retweet, best_retweet = rt*(( today - day ).days), row[10]
 
     if row[14] != None : lk = int( row[14] ) / (today - day).days
-    if lk > max_likes : max_likes, best_liked = lk, row[10]
+    if lk > max_likes : max_likes, best_liked = lk*(( today - day ).days), row[10]
 
     # Word are clasified and a global rate for the sentence is defined. The lower case convention is used in words and hashtags to avoid the consideration of repeated words with capital lettters present.
     for word in words:
