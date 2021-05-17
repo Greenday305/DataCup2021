@@ -41,15 +41,11 @@ for row in sheet.iter_rows(min_row = 2, max_row = sheet.max_row, values_only = T
     # This code line does not really solve a problem, but it makes the classification work efficiently.
     if row[11] != None : hashtags = row[11].split("'")
 
-    """ for t in dates : 
-        if t[0] == 0 : dates[t] = dates[1:]
-    day = date(",".join(dates)) """
-
     if row[13] != None : rt = int( row[13] ) / ( today - day ).days
-    if rt > max_retweet : max_retweet, best_retweet = rt, row[10]
+    if rt > max_retweet : max_retweet, best_retweet = rt * ( today - day ).days, row[10]
 
     if row[14] != None : lk = int( row[14] ) / (today - day).days
-    if lk > max_likes : max_likes, best_liked = lk, row[10]
+    if lk > max_likes : max_likes, best_liked = lk * ( today - day ).days, row[10]
 
     # Word are clasified and a global rate for the sentence is defined. The lower case convention is used in words and hashtags to avoid the consideration of repeated words with capital lettters present.
     for word in words:
@@ -81,7 +77,7 @@ for row in sheet.iter_rows(min_row = 2, max_row = sheet.max_row, values_only = T
 # Timer is terminated and results are displayed.
 end = time.time()
 
-print("Most retweets:\n", best_retweet, "\n\n", "Most liked:", best_liked, "\n")
+print("Most retweets:\n", best_retweet, "\n\n", "Most liked:\n", best_liked, "\n")
 
 print("Positive: ", rates["positive"], "\nRetweets: ", retweets["positive"], "\nNegative: ", rates["negative"], "\nRetweets: ",  retweets["negative"], "\nNeutral: ", rates["neutral"], "\nvaccines: ", total_vaccines, "\nTime: ", end - start)
 
