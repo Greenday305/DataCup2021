@@ -126,25 +126,14 @@ plt.ylabel("Número de tweets")
 plt.title("reacciones a la vacuna")
 plt.show()
 
-#print(list(locaciones.values()))
-
-""" plt.figure(2)
-numloc = [list(locaciones.values())[i][1] for i in range(len(locaciones))]
-plt.bar(locaciones.keys(), numloc, 1, color = 'r')
-plt.xlabel("Locaciones")
-plt.ylabel("Número de tweets")
-plt.title("Tweets por locación") """
-
 locaciones = {k: v for k, v in sorted(locaciones.items(), key=lambda item: item[1])}
 
-print(locaciones)
 
 top10 = []
 
 for i in range(9):
     top10.append(list(locaciones.items())[len(locaciones)-i-1])
 
-print(top10)
 top10nom = []
 top10num = []
 for i in range(len(top10)):
@@ -154,7 +143,5 @@ plt.bar(top10nom, top10num, 1, color = 'r')
 plt.xlabel("Locaciones")
 plt.ylabel("Número de tweets")
 plt.title("Tweets por locación")
-
-#print(locaciones)
 
 plt.show()
