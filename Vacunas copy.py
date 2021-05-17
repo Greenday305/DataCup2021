@@ -142,6 +142,6 @@ for i in range(len(top10)):
 plt.bar(top10nom, top10num, 1, color = 'r')
 plt.xlabel("Locaciones")
 plt.ylabel("Número de tweets")
-plt.title("Tweets por locación")
+plt.title("Top 10 locaciones por número de tweets")
 
 plt.show()
