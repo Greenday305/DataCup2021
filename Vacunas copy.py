@@ -114,6 +114,7 @@ print("Positive: ", rates["positive"], "\nRetweets: ", retweets["positive"], "\n
 
 # First try of an histogram (this is still in process).
 plt.bar(total_vaccines.keys(), total_vaccines.values(), 1, color = 'b')
+plt.xticks(rotation = "vertical")
 plt.xlabel("Vacunas")
 plt.ylabel("Número de menciones")
 plt.title("Menciones de cada vacuna")
