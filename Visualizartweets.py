@@ -17,9 +17,14 @@ sheet = wb.worksheets[0]
 
 coordenadas = []
 
+locaciones: {
+
+}
+
 i = 0
 for row in sheet.iter_rows(min_row=2, max_row=sheet.max_row, values_only=True):
     i+= 1
+    if row[2].split(" ")[1]
     try:
         url = 'https://nominatim.openstreetmap.org/search/' + urllib.parse.quote(row[2]) +'?format=json'
         response = requests.get(url).json()
