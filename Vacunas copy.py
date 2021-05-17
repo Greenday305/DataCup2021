@@ -113,11 +113,17 @@ print("Most retweets:\n", best_retweet, "\n\n",
 print("Positive: ", rates["positive"], "\nRetweets: ", retweets["positive"], "\nNegative: ", rates["negative"], "\nRetweets: ",  retweets["negative"], "\nNeutral: ", rates["neutral"], "\nvaccines: ", total_vaccines, "\nTime: ", end - start)
 
 # First try of an histogram (this is still in process).
-plt.figure(1)
 plt.bar(total_vaccines.keys(), total_vaccines.values(), 1, color = 'b')
 plt.xlabel("Vacunas")
 plt.ylabel("Número de menciones")
 plt.title("Menciones de cada vacuna")
+plt.show()
+
+plt.bar(rates.keys(), rates.values(), 1, color = 'b')
+plt.xlabel("Reacciones")
+plt.ylabel("Número de tweets")
+plt.title("reacciones a la vacuna")
+plt.show()
 
 print(locaciones)
 
