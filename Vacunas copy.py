@@ -123,7 +123,7 @@ plt.show()
 plt.bar(rates.keys(), rates.values(), 1, color = 'b')
 plt.xlabel("Reacciones")
 plt.ylabel("Número de tweets")
-plt.title("reacciones a la vacuna")
+plt.title("Reacciones a la vacuna")
 plt.show()
 
 locaciones = {k: v for k, v in sorted(locaciones.items(), key=lambda item: item[1])}
