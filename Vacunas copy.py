@@ -51,7 +51,7 @@ coor = []
 for k in locaciones:
     b = locaciones[k].strip("'\n]['").split("', '")
     b = [ float(item) for item in b]
-    locaciones[k] = [b,0]
+    locaciones[k] = 0
     coor.append(b)
 
 total_words = dict()
@@ -100,7 +100,7 @@ for row in sheet.iter_rows(min_row = 2, max_row = sheet.max_row, values_only = T
 
     #Here we count the number of tweets by location
     if row[2] in locaciones:
-        locaciones[row[2]][1] += 1
+        locaciones[row[2]] += 1
 
 # Timer is terminated and results are displayed.
 end = time.time()
@@ -125,7 +125,7 @@ plt.ylabel("Número de tweets")
 plt.title("reacciones a la vacuna")
 plt.show()
 
-print(locaciones)
+#print(list(locaciones.values()))
 
 """ plt.figure(2)
 numloc = [list(locaciones.values())[i][1] for i in range(len(locaciones))]
@@ -133,5 +133,27 @@ plt.bar(locaciones.keys(), numloc, 1, color = 'r')
 plt.xlabel("Locaciones")
 plt.ylabel("Número de tweets")
 plt.title("Tweets por locación") """
+
+locaciones = {k: v for k, v in sorted(locaciones.items(), key=lambda item: item[1])}
+
+print(locaciones)
+
+top10 = []
+
+for i in range(9):
+    top10.append(list(locaciones.items())[len(locaciones)-i-1])
+
+print(top10)
+top10nom = []
+top10num = []
+for i in range(len(top10)):
+    top10nom.append(top10[i][0])
+    top10num.append(top10[i][1])
+plt.bar(top10nom, top10num, 1, color = 'r')
+plt.xlabel("Locaciones")
+plt.ylabel("Número de tweets")
+plt.title("Tweets por locación")
+
+#print(locaciones)
 
 plt.show()
