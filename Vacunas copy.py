@@ -131,7 +131,7 @@ locaciones = {k: v for k, v in sorted(locaciones.items(), key=lambda item: item[
 
 top10 = []
 
-for i in range(9):
+for i in range(10):
     top10.append(list(locaciones.items())[len(locaciones)-i-1])
 
 top10nom = []
