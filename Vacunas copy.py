@@ -128,7 +128,6 @@ plt.show()
 
 locaciones = {k: v for k, v in sorted(locaciones.items(), key=lambda item: item[1])}
 
-
 top10 = []
 
 for i in range(10):
